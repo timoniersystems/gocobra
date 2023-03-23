@@ -15,7 +15,8 @@ var factCmd = &cobra.Command{
 	Use:   "fact",
 	Short: "Retrieve a random fact from the Internet",
 	Long: `Supported fact types are
-	       * Facts about cats`,
+	       * Cat facts
+		   * Number facts`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("fact called")
 	},

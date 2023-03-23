@@ -15,7 +15,8 @@ var jokeCmd = &cobra.Command{
 	Use:   "joke",
 	Short: "Retrieve a random joke from the Internet",
 	Long: `Supported joke types are
-	       * Chuck Norris jokes`,
+	       * Chuck Norris jokes
+		   * Dad jokes`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("joke called")
 	},

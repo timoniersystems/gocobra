@@ -17,3 +17,42 @@ CLI example based on Cobra
 
 `go run main.go`
 
+## Add commands and subcommands
+
+```
+cobra-cli add joke
+cobra-cli add fact
+```
+
+## Public APIs
+
+Jokes:
+```
+curl  -H "Accept: application/json" https://api.chucknorris.io/jokes/random
+curl -H "Accept: application/json" https://icanhazdadjoke.com/
+curl  -H "Accept: application/json" https://itsthisforthat.com/api.php\?json
+```
+
+Facts:
+```
+curl  -H "Accept: application/json" https://meowfacts.herokuapp.com/  
+curl  -H "Accept: application/json"  http://numbersapi.com/42/trivia\?json
+```
+
+News
+```
+https://inshorts.deta.dev/news?category=science
+
+Categories:
+business
+sports
+world
+politics
+technology
+startup
+entertainment
+miscellaneous
+hatke
+science
+automobile
+```
