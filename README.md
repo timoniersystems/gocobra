@@ -22,6 +22,7 @@ CLI example based on Cobra
 ```
 cobra-cli add joke
 cobra-cli add fact
+cobra-cli add news
 ```
 
 ## Public APIs
