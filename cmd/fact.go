@@ -10,13 +10,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var factType string
+
 // factCmd represents the fact command
 var factCmd = &cobra.Command{
 	Use:   "fact",
 	Short: "Retrieve a random fact from the Internet",
 	Long: `Supported fact types are:
-* Cat facts
-* Number facts`,
+* Cat facts (-t cats)
+* Number facts (-t numbers)`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("fact called")
 	},
@@ -24,7 +26,7 @@ var factCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(factCmd)
-
+	factCmd.PersistentFlags().StringVarP(&factType, "type", "t", "", "Fact type: cats (default) or numbers")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
