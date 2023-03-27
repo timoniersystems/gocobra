@@ -30,7 +30,6 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --clean
-          workdir: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
@@ -40,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: gocobra
-          path: release/dist/*
+          path: dist/*
