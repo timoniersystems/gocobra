@@ -5,33 +5,60 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
-
+	"os"
 	"github.com/spf13/cobra"
+	httpclient "github.com/timoniersystems/gocobra/internal/httpclient"
 )
+
+var jokeType string
+
+type ChuckNorrisJoke struct {
+	Categories []any  `json:"categories"`
+	CreatedAt  string `json:"created_at"`
+	IconURL    string `json:"icon_url"`
+	ID         string `json:"id"`
+	UpdatedAt  string `json:"updated_at"`
+	URL        string `json:"url"`
+	Value      string `json:"value"`
+}
 
 // jokeCmd represents the joke command
 var jokeCmd = &cobra.Command{
 	Use:   "joke",
 	Short: "Retrieve a random joke from the Internet",
-	Long: `Supported joke types are
-	       * Chuck Norris jokes
-		   * Dad jokes`,
+	Long: `Supported joke types are:
+* Chuck Norris jokes (-t chucknorris)
+* Dad jokes (-t dad)`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("joke called")
+		supportedJokeTypes := map[string]bool{
+			"chucknorris": true,
+			"dad": true,
+		}
+		fmt.Printf("joke called with joke type %s\n", jokeType)
+		_, ok := supportedJokeTypes[jokeType]
+		if !ok {
+			fmt.Printf("%s is not a supported joke type\n", jokeType)
+			os.Exit(1)
+		}
+		//fmt.Printf("%s is a supported joke type\n", jokeType)
+		if jokeType == "chucknorris" {
+			resBody, err := httpclient.GetTextFromURL("https://api.chucknorris.io/jokes/random")
+			if err != nil {
+				os.Exit(1)
+			}
+			//fmt.Printf("response body: %s\n", string(resBody))
+			var result ChuckNorrisJoke
+			if err := json.Unmarshal(resBody, &result); err != nil {   // Parse []byte to go struct pointer
+				fmt.Println("Can not unmarshal JSON")
+			}
+			fmt.Println(result.Value)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(jokeCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// jokeCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// jokeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	jokeCmd.PersistentFlags().StringVarP(&jokeType, "type", "t", "", "Joke type: chucknorris (default) or dad")
 }

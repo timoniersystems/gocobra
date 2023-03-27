@@ -14,15 +14,15 @@ import (
 var newsCmd = &cobra.Command{
 	Use:   "news",
 	Short: "Retrieve news from the Internet",
-	Long: `Supported news categories are
-	       * business
-		   * sports
-		   * world
-		   * politics
-	 	   * technology
-		   * startup
-		   * entertainment
-		   * science`,
+	Long: `Supported news categories are:
+* business
+* sports
+* world
+* politics
+* technology
+* startup
+* entertainment
+* science`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("news called")
 	},
