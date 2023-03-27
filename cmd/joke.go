@@ -14,6 +14,7 @@ import (
 
 var jokeType string
 
+// converted from JSON responses via https://mholt.github.io/json-to-go/
 type ChuckNorrisJoke struct {
 	Categories []any  `json:"categories"`
 	CreatedAt  string `json:"created_at"`
@@ -22,6 +23,12 @@ type ChuckNorrisJoke struct {
 	UpdatedAt  string `json:"updated_at"`
 	URL        string `json:"url"`
 	Value      string `json:"value"`
+}
+
+type DadJoke struct {
+	ID     string `json:"id"`
+	Joke   string `json:"joke"`
+	Status int    `json:"status"`
 }
 
 // jokeCmd represents the joke command
@@ -36,7 +43,7 @@ var jokeCmd = &cobra.Command{
 			"chucknorris": true,
 			"dad": true,
 		}
-		fmt.Printf("joke called with joke type %s\n", jokeType)
+		fmt.Printf("Here is your %s joke:\n", jokeType)
 		_, ok := supportedJokeTypes[jokeType]
 		if !ok {
 			fmt.Printf("%s is not a supported joke type\n", jokeType)
@@ -51,9 +58,25 @@ var jokeCmd = &cobra.Command{
 			//fmt.Printf("response body: %s\n", string(resBody))
 			var result ChuckNorrisJoke
 			if err := json.Unmarshal(resBody, &result); err != nil {   // Parse []byte to go struct pointer
-				fmt.Println("Can not unmarshal JSON")
+				fmt.Println("Error unmarshaling JSON")
+				os.Exit(1)
 			}
 			fmt.Println(result.Value)
+			os.Exit(0)
+		}
+		if jokeType == "dad" {
+			resBody, err := httpclient.GetTextFromURL("https://icanhazdadjoke.com/")
+			if err != nil {
+				os.Exit(1)
+			}
+			//fmt.Printf("response body: %s\n", string(resBody))
+			var result DadJoke
+			if err := json.Unmarshal(resBody, &result); err != nil {   // Parse []byte to go struct pointer
+				fmt.Println("Error unmarshaling JSON")
+				os.Exit(1)
+			}
+			fmt.Println(result.Joke)
+			os.Exit(0)
 		}
 	},
 }

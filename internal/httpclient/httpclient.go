@@ -7,13 +7,20 @@ import (
 )
 
 func GetTextFromURL(url string) (resBody []byte, err error) {
+	client := http.Client{}
+
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		fmt.Printf("client: could not create request: %s\n", err)
 		return nil, err
 	}
 
-	res, err := http.DefaultClient.Do(req)
+	req.Header = http.Header{
+		"Content-Type": {"application/json"},
+		"Accept": {"application/json"},
+	}
+	
+	res, err := client.Do(req)
 	if err != nil {
 		fmt.Printf("client: error making http request: %s\n", err)
 		return nil, err
