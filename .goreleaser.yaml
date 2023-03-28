@@ -34,6 +34,12 @@ kos:
 docker_signs:
 - artifacts: all
   stdin: '{{ .Env.COSIGN_PWD }}'
+  args:
+  - "sign"
+  - "--key=/tmp/cosign.key"
+  - "--upload=false"
+  - "${artifact}"
+  - "--yes"
 
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
