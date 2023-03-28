@@ -59,6 +59,9 @@ jobs:
           #IMAGE_TAG=$(jq -r '.tag' <<< \'${{ steps.goreleaser.outputs.metadata }}\')
           IMAGE_TAG=$(echo ${{ steps.goreleaser.outputs.metadata }} | cut -d : -f 3 | cut -d , -f 1)
           IMAGE_NAME=ghcr.io/timoniersystems/gocobra
+          echo IMAGE_NAME=$IMAGE_NAME
+          echo IMAGE_TAG=$IMAGE_TAG
+          crane digest ${IMAGE_NAME}:${IMAGE_TAG}
           IMAGE_DIGEST=$(crane digest ${IMAGE_NAME}:${IMAGE_TAG})
           cosign sign --key env://COSIGN_PRIVATE_KEY ${IMAGE_NAME}@$IMAGE_DIGEST
         env:
