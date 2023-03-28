@@ -31,26 +31,10 @@ kos:
     - linux/arm64
     sbom: spdx
 
-# signs:
-# - cmd: cosign
-#   certificate: '${artifact}.pem'
-#   output: true
-#   artifacts: checksum
-#   args:
-#     - sign-blob
-#     - '--output-certificate=${certificate}'
-#     - '--output-signature=${signature}'
-#     - '${artifact}'
-#     - --yes
+docker_signs:
+- artifacts: all
+  stdin: '{{ .Env.COSIGN_PWD }}'
 
-# docker_signs:
-# - cmd: cosign
-#   artifacts: manifests
-#   output: true
-#   args:
-#   - 'sign'
-#   - '${artifact}@${digest}'
-#   - --yes
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=jcroql
