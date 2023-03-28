@@ -54,7 +54,7 @@ jobs:
       - name: Sign generated Docker image with Cosign
         shell: bash
         run: |
-          apt-get -y install jq
+          sudo apt-get update && sudo apt-get -y install jq
           IMAGE_TAG=$(echo ${{ steps.goreleaser.outputs.metadata }} | jq -r '.tag')
           IMAGE_NAME=ghcr.io/timoniersystems/gocobra
           cosign sign --key env://COSIGN_PRIVATE_KEY ${IMAGE_NAME}:${IMAGE_TAG}
