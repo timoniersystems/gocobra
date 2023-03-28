@@ -39,11 +39,12 @@ jobs:
           echo ${{ secrets.COSIGN_KEY_BASE64 }} | base64 -d > /tmp/cosign.key
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
+        id: goreleaser
         with:
           distribution: goreleaser
           version: latest
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: List crt dir
-        run: find . -ls
+      - name: Display goreleaser metadata
+        run: cat ${{ steps.goreleaser.outputs.metadata }}

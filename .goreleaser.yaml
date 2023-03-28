@@ -32,7 +32,7 @@ kos:
     sbom: spdx
 
 docker_signs:
-- artifacts: all
+- artifacts: manifests
   stdin: '{{ .Env.COSIGN_PWD }}'
   args:
   - "sign"
