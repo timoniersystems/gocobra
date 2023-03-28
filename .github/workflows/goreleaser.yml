@@ -64,7 +64,7 @@ jobs:
           echo IMAGE_TAG=$IMAGE_TAG
           crane digest ${IMAGE_NAME}:${IMAGE_TAG}
           IMAGE_DIGEST=$(crane digest ${IMAGE_NAME}:${IMAGE_TAG})
-          echo ${{secrets.COSIGN_PRIVATE_KEY_PASSWORD}} | cosign sign --key /tmp/cosign.key ${IMAGE_NAME}@$IMAGE_DIGEST
+          echo '${{secrets.COSIGN_PRIVATE_KEY_PASSWORD}}'' | cosign sign --key /tmp/cosign.key ${IMAGE_NAME}@$IMAGE_DIGEST
         env:
           COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
           COSIGN_PASSWORD: ${{secrets.COSIGN_PRIVATE_KEY_PASSWORD}}
