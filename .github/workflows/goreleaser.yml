@@ -57,7 +57,7 @@ jobs:
         shell: bash
         run: |
           #IMAGE_TAG=$(jq -r '.tag' <<< \'${{ steps.goreleaser.outputs.metadata }}\')
-          IMAGE_TAG=$(echo ${{ steps.goreleaser.outputs.metadata }} | cut -d : -f 3 | cut -d , -f 1)
+          IMAGE_TAG=$(echo ${{ steps.goreleaser.outputs.metadata }} | cut -d , -f 2 | cut -d : -f 2)
           IMAGE_NAME=ghcr.io/timoniersystems/gocobra
           echo IMAGE_NAME=$IMAGE_NAME
           echo IMAGE_TAG=$IMAGE_TAG
