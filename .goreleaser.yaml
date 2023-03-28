@@ -29,7 +29,7 @@ kos:
     platforms:
     - linux/amd64
     - linux/arm64
-    sbom: cyclonedx
+    sbom: spdx
 
 # signs:
 # - cmd: cosign
