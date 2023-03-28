@@ -36,7 +36,7 @@ jobs:
           COSIGN_PWD: ${{ secrets.COSIGN_PRIVATE_KEY_PASSWORD }}
         shell: bash
         run: |
-          cat ${{ secrets.COSIGN_KEY_BASE64 }} | base64 -d > cosign.key
+          echo ${{ secrets.COSIGN_KEY_BASE64 }} | base64 -d > cosign.key
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
