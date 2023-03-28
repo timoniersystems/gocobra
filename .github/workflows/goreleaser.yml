@@ -47,6 +47,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Display goreleaser metadata
+        shell: bash
         run: |
           METADATA=${{ steps.goreleaser.outputs.metadata }}
           echo $METADATA
+      - name: Sign generated Docker image with Cosign
+        shell: bash
+        run: |
+          apt-get -y install jq
+          IMAGE_TAG=$(echo ${{ steps.goreleaser.outputs.metadata }} | jq -r '.tag')
+          IMAGE_NAME=ghcr.io/timoniersystems/gocobra
+          cosign sign --key env://COSIGN_PRIVATE_KEY ${IMAGE_NAME}:${IMAGE_TAG}
+        env:
+          COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
+          COSIGN_PASSWORD: ${{secrets.COSIGN_PRIVATE_KEY_PASSWORD}}
+
