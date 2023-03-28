@@ -1,13 +1,74 @@
-# .goreleaser.yml
+env:
+  - GO111MODULE=on
+
 builds:
-  - env: [ "CGO_ENABLED=1" ]
-    binary: gocobra
-    goos:
-    - darwin
+- env:
+    - CGO_ENABLED=0
+  goos:
     - linux
-    goarch:
+    - darwin
+    - windows
+  goarch:
+    - "386"
     - amd64
+    - arm
     - arm64
+    - ppc64
+  goarm:
+    - "7"
+  ignore:
+    - goos: windows
+      goarch: arm
+  mod_timestamp: '{{ .CommitTimestamp }}'
+  flags:
+    - -trimpath
+  ldflags:
+    - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
+
+archives:
+  - name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+    - goos: windows
+      format: zip
+    builds_info:
+      group: root
+      owner: root
+    rlcp: true
+    files:
+      - README.md
+      - LICENSE.md
+      - completions/*
+      - manpages/*
+
+sboms:
+  - artifacts: archive
+
+# signs:
+# - cmd: cosign
+#   certificate: '${artifact}.pem'
+#   output: true
+#   artifacts: checksum
+#   args:
+#     - sign-blob
+#     - '--output-certificate=${certificate}'
+#     - '--output-signature=${signature}'
+#     - '${artifact}'
+#     - --yes
+
+# docker_signs:
+# - cmd: cosign
+#   artifacts: manifests
+#   output: true
+#   args:
+#   - 'sign'
+#   - '${artifact}@${digest}'
+#   - --yes
 
 kos:
   - repository: ghcr.io/timoniersystems/gocobra
@@ -20,3 +81,7 @@ kos:
     - linux/amd64
     - linux/arm64
     sbom: cyclonedx
+
+
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=jcroql
