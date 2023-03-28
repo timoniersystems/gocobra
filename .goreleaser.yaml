@@ -16,8 +16,8 @@ builds:
   ldflags:
     - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
 
-sboms:
-  - artifacts: archive
+# sboms:
+#   - artifacts: archive
 
 kos:
   - repository: ghcr.io/timoniersystems/gocobra
@@ -29,7 +29,7 @@ kos:
     platforms:
     - linux/amd64
     - linux/arm64
-    sbom: cyclonedx
+    #sbom: cyclonedx
 
 # signs:
 # - cmd: cosign
