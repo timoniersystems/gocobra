@@ -47,4 +47,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Display goreleaser metadata
-        run: cat ${{ steps.goreleaser.outputs.metadata }}
+        run: |
+          METADATA=${{ steps.goreleaser.outputs.metadata }}
+          echo $METADATA
