@@ -83,5 +83,5 @@ var jokeCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(jokeCmd)
-	jokeCmd.PersistentFlags().StringVarP(&jokeType, "type", "t", "", "Joke type: chucknorris (default) or dad")
+	jokeCmd.PersistentFlags().StringVarP(&jokeType, "type", "t", "dad", "Joke type: dad (default) or chucknorris")
 }

@@ -82,6 +82,6 @@ var factCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(factCmd)
-	factCmd.PersistentFlags().StringVarP(&factType, "type", "t", "", "Fact type: cats (default) or numbers")
+	factCmd.PersistentFlags().StringVarP(&factType, "type", "t", "cats", "Fact type: cats (default) or numbers")
 	factCmd.PersistentFlags().IntVarP(&numberValue, "number", "n", 42, "Number to get a fact for")
 }
