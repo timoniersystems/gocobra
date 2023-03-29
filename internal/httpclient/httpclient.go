@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func GetTextFromURL(url string) (resBody []byte, err error) {
+func GetHTTPResponseBody(url string) (body []byte, err error) {
 	client := http.Client{}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -29,11 +29,11 @@ func GetTextFromURL(url string) (resBody []byte, err error) {
 	// fmt.Printf("client: got response!\n")
 	// fmt.Printf("client: status code: %d\n", res.StatusCode)
 
-	resultBody, err := ioutil.ReadAll(res.Body)
+	responseBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		fmt.Printf("client: could not read response body: %s\n", err)
 		return nil, err
 	}
-	return resultBody, err
+	return responseBody, err
 }
 

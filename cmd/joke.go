@@ -43,15 +43,15 @@ var jokeCmd = &cobra.Command{
 			"chucknorris": true,
 			"dad": true,
 		}
-		fmt.Printf("Here is your %s joke:\n", jokeType)
 		_, ok := supportedJokeTypes[jokeType]
 		if !ok {
 			fmt.Printf("%s is not a supported joke type\n", jokeType)
 			os.Exit(1)
 		}
+		fmt.Printf("Here is your %s joke:\n", jokeType)
 		//fmt.Printf("%s is a supported joke type\n", jokeType)
 		if jokeType == "chucknorris" {
-			resBody, err := httpclient.GetTextFromURL("https://api.chucknorris.io/jokes/random")
+			resBody, err := httpclient.GetHTTPResponseBody("https://api.chucknorris.io/jokes/random")
 			if err != nil {
 				os.Exit(1)
 			}
@@ -65,7 +65,7 @@ var jokeCmd = &cobra.Command{
 			os.Exit(0)
 		}
 		if jokeType == "dad" {
-			resBody, err := httpclient.GetTextFromURL("https://icanhazdadjoke.com/")
+			resBody, err := httpclient.GetHTTPResponseBody("https://icanhazdadjoke.com/")
 			if err != nil {
 				os.Exit(1)
 			}
