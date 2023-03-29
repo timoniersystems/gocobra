@@ -1,5 +1,5 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Timonier Systems
 
 */
 package cmd
@@ -45,11 +45,13 @@ var jokeCmd = &cobra.Command{
 		}
 		_, ok := supportedJokeTypes[jokeType]
 		if !ok {
-			fmt.Printf("%s is not a supported joke type\n", jokeType)
-			os.Exit(1)
+			fmt.Printf("%s is not a supported joke type.\n", jokeType)
+			jokeType = "dad"
+			fmt.Printf("However, here is your %s joke:\n", jokeType)
+		} else {
+			fmt.Printf("Here is your %s joke:\n", jokeType)
 		}
-		fmt.Printf("Here is your %s joke:\n", jokeType)
-		//fmt.Printf("%s is a supported joke type\n", jokeType)
+		
 		if jokeType == "chucknorris" {
 			resBody, err := httpclient.GetHTTPResponseBody("https://api.chucknorris.io/jokes/random")
 			if err != nil {

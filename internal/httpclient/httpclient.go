@@ -1,3 +1,8 @@
+/*
+Copyright © 2023 Timonier Systems
+
+*/
+
 package httpclient
 
 import (

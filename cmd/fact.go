@@ -1,5 +1,5 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 Timonier Systems
 
 */
 package cmd
@@ -41,12 +41,16 @@ var factCmd = &cobra.Command{
 		}
 		_, ok := supportedFactTypes[factType]
 		if !ok {
-			fmt.Printf("%s is not a supported fact type\n", factType)
-			os.Exit(1)
+			fmt.Printf("%s is not a supported fact type.\n", factType)
+			factType = "cats"
+			fmt.Printf("However, here a %s fact:\n", factType)
+		} else if factType != "numbers" {
+			fmt.Printf("Here is your %s fact:\n", factType)
+		} else {
+			fmt.Printf("Here is your %s fact for n=%d:\n", factType, numberValue)
 		}
 		
 		if factType == "cats" {
-			fmt.Printf("Here is your %s fact:\n", factType)
 			resBody, err := httpclient.GetHTTPResponseBody("https://meowfacts.herokuapp.com/")
 			if err != nil {
 				os.Exit(1)
@@ -61,7 +65,6 @@ var factCmd = &cobra.Command{
 			os.Exit(0)
 		}
 		if factType == "numbers" {
-			fmt.Printf("Here is your %s fact for n=%d:\n", factType, numberValue)
 			url := fmt.Sprintf("http://numbersapi.com/%d/trivia?json", numberValue)
 			resBody, err := httpclient.GetHTTPResponseBody(url)
 			if err != nil {
