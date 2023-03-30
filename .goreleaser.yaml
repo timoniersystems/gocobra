@@ -31,16 +31,25 @@ kos:
     - linux/arm64
     sbom: spdx
 
-docker_signs:
-- artifacts: manifests
+checksum:
+  name_template: 'checksums.txt'
+
+signs:
+- cmd: cosign
   stdin: '{{ .Env.COSIGN_PWD }}'
-  args:
-  - "sign"
-  - "--key=/tmp/cosign.key"
-  - "--upload=true"
-  - "${artifact}"
-  - "--yes"
-  output: true
+  args: ["sign-blob", "-key=cosign.key", "-output=${signature}", "${artifact}"]
+  artifacts: checksum
+
+# docker_signs:
+# - artifacts: manifests
+#   stdin: '{{ .Env.COSIGN_PWD }}'
+#   args:
+#   - "sign"
+#   - "--key=/tmp/cosign.key"
+#   - "--upload=true"
+#   - "${artifact}"
+#   - "--yes"
+#   output: true
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=jcroql
