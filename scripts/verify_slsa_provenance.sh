@@ -1,7 +1,7 @@
 #!/bin/bash
 
+SOURCE_TAG=2.5.0
 SOURCE_URI=github.com/timoniersystems/gocobra
-SOURCE_TAG=2.0.4
 ARTIFACT_FILE=gocobra-linux-amd64-slsa3
 INTOTO_ATTESTATION=gocobra-linux-amd64-slsa3.intoto.jsonl
 
