@@ -1,4 +1,7 @@
 gocobra*
 *linux-amd64*
 *.json
+*.sarif
 checksums*
+_crane_pull
+_docker_save
